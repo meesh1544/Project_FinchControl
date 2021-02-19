@@ -139,8 +139,8 @@ namespace Project_FinchControl
                 // get user menu choice
                 //
                 Console.WriteLine("\ta) Light and Sound");
-                Console.WriteLine("\tb) ");
-                Console.WriteLine("\tc) ");
+                Console.WriteLine("\tb) Dance");
+                Console.WriteLine("\tc) Mix it up");
                 Console.WriteLine("\td) ");
                 Console.WriteLine("\tq) Main Menu");
                 Console.Write("\t\tEnter Choice:");
@@ -156,11 +156,11 @@ namespace Project_FinchControl
                         break;
 
                     case "b":
-
+                        TalentShowDisplayDance(finchRobot);
                         break;
 
                     case "c":
-
+                        TalentShowDisplayMixItUp(finchRobot);
                         break;
 
                     case "d":
@@ -199,140 +199,233 @@ namespace Project_FinchControl
             for (int lightSoundLevel = 0; lightSoundLevel < 255; lightSoundLevel++)
             {
                 finchRobot.setLED(lightSoundLevel, lightSoundLevel, lightSoundLevel);
-                finchRobot.noteOn(lightSoundLevel * 100);
+                finchRobot.noteOn(lightSoundLevel * 75);
+            }
+            DisplayMenuPrompt("Talent Show Menu");
+
+            //****************************************************************************
+            //          Talent show > Dance
+            //****************************************************************************
+
+             static void TalentShowDisplayDance(Finch finchRobot);
+            {
+                Console.CursorVisible = false;
+
+                Console.WriteLine("\tThe Finch will now dance for you!");
+
+                DisplayContinuePrompt();
+
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.setMotors(100, 25);
+                finchRobot.wait(10);
+                finchRobot.setMotors(75, 30);
+                finchRobot.wait(10);
+                finchRobot.setMotors(50, -10);
+                finchRobot.wait(10);
+                finchRobot.setMotors(-30, 50);
+                finchRobot.wait(10);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+
+                DisplayMenuPrompt("Talent Show Menu");
             }
 
-            DisplayMenuPrompt("Talent Show Menu");
+            //***********************************************************************
+            //          Talent show > Mix it up
+            //***********************************************************************
+
+            static void TalentShowDisplayMixItUp(Finch finchRobot)
+
+            {
+                Console.CursorVisible = false;
+
+                DisplayScreenHeader("Mix it up");
+
+                Console.WriteLine("\tThe Finch robot will not show off all of its moves!");
+
+                DisplayContinuePrompt();
+
+                finchRobot.noteOn(698);
+                finchRobot.wait(10);
+                finchRobot.setLED(0, 255, 0);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(255, 0, 0);
+                finchRobot.setMotors(50, 0);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(0, 0, 255);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(0, 255, 0);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.noteOn(659);
+                finchRobot.setLED(255, 0, 0);
+                finchRobot.setMotors(50, 0);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(0, 0, 255);
+                finchRobot.setMotors(50, 0);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(255, 0, 0);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(0, 255, 0);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(0, 0, 255);
+                finchRobot.setMotors(50, 0);
+                finchRobot.wait(10);
+                finchRobot.noteOn(659);
+                finchRobot.setLED(0, 255, 0);
+                finchRobot.setMotors(0, 50);
+                finchRobot.wait(10);
+                finchRobot.noteOn(698);
+                finchRobot.setLED(0, 0, 255);
+                finchRobot.setMotors(50, 0);
+                finchRobot.wait(10);
+                finchRobot.noteOff();
+
+                DisplayMenuPrompt("Talent Show Menu");
+            }
+            #endregion
+
+            #region FINCH ROBOT MANAGEMENT
+
+            /// <summary>
+            /// *****************************************************************
+            /// *               Disconnect the Finch Robot                      *
+            /// *****************************************************************
+            /// </summary>
+            /// <param name="finchRobot">finch robot object</param>
+            static void DisplayDisconnectFinchRobot(Finch finchRobot)
+            {
+                Console.CursorVisible = false;
+
+                DisplayScreenHeader("Disconnect Finch Robot");
+
+                Console.WriteLine("\tAbout to disconnect from the Finch robot.");
+                DisplayContinuePrompt();
+
+                finchRobot.disConnect();
+
+                Console.WriteLine("\tThe Finch robot is now disconnect.");
+
+                DisplayMenuPrompt("Main Menu");
+            }
+
+            /// <summary>
+            /// *****************************************************************
+            /// *                  Connect the Finch Robot                      *
+            /// *****************************************************************
+            /// </summary>
+            /// <param name="finchRobot">finch robot object</param>
+            /// <returns>notify if the robot is connected</returns>
+            static bool DisplayConnectFinchRobot(Finch finchRobot)
+            {
+                Console.CursorVisible = false;
+
+                bool robotConnected;
+
+                DisplayScreenHeader("Connect Finch Robot");
+
+                Console.WriteLine("\tAbout to connect to Finch robot. Please be sure the USB cable is connected to the robot and computer now.");
+                DisplayContinuePrompt();
+
+                robotConnected = finchRobot.connect();
+
+                // TODO test connection and provide user feedback - text, lights, sounds
+
+                DisplayMenuPrompt("Main Menu");
+
+                //
+                // reset finch robot
+                //
+                finchRobot.setLED(0, 0, 0);
+                finchRobot.noteOff();
+
+                return robotConnected;
+            }
+
+            #endregion
+
+            #region USER INTERFACE
+
+            /// <summary>
+            /// *****************************************************************
+            /// *                     Welcome Screen                            *
+            /// *****************************************************************
+            /// </summary>
+            static void DisplayWelcomeScreen()
+            {
+                Console.CursorVisible = false;
+
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("\t\tFinch Control");
+                Console.WriteLine();
+
+                DisplayContinuePrompt();
+            }
+
+            /// <summary>
+            /// *****************************************************************
+            /// *                     Closing Screen                            *
+            /// *****************************************************************
+            /// </summary>
+            static void DisplayClosingScreen()
+            {
+                Console.CursorVisible = false;
+
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("\t\tThank you for using Finch Control!");
+                Console.WriteLine();
+
+                DisplayContinuePrompt();
+            }
+
+            /// <summary>
+            /// display continue prompt
+            /// </summary>
+            static void DisplayContinuePrompt()
+            {
+                Console.WriteLine();
+                Console.WriteLine("\tPress any key to continue.");
+                Console.ReadKey();
+            }
+
+            /// <summary>
+            /// display menu prompt
+            /// </summary>
+            static void DisplayMenuPrompt(string menuName)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"\tPress any key to return to the {menuName} Menu.");
+                Console.ReadKey();
+            }
+
+            /// <summary>
+            /// display screen header
+            /// </summary>
+            static void DisplayScreenHeader(string headerText)
+            {
+                Console.Clear();
+                Console.WriteLine();
+                Console.WriteLine("\t\t" + headerText);
+                Console.WriteLine();
+            }
+
+            #endregion
         }
-
-        #endregion
-
-        #region FINCH ROBOT MANAGEMENT
-
-        /// <summary>
-        /// *****************************************************************
-        /// *               Disconnect the Finch Robot                      *
-        /// *****************************************************************
-        /// </summary>
-        /// <param name="finchRobot">finch robot object</param>
-        static void DisplayDisconnectFinchRobot(Finch finchRobot)
-        {
-            Console.CursorVisible = false;
-
-            DisplayScreenHeader("Disconnect Finch Robot");
-
-            Console.WriteLine("\tAbout to disconnect from the Finch robot.");
-            DisplayContinuePrompt();
-
-            finchRobot.disConnect();
-
-            Console.WriteLine("\tThe Finch robot is now disconnect.");
-
-            DisplayMenuPrompt("Main Menu");
-        }
-
-        /// <summary>
-        /// *****************************************************************
-        /// *                  Connect the Finch Robot                      *
-        /// *****************************************************************
-        /// </summary>
-        /// <param name="finchRobot">finch robot object</param>
-        /// <returns>notify if the robot is connected</returns>
-        static bool DisplayConnectFinchRobot(Finch finchRobot)
-        {
-            Console.CursorVisible = false;
-
-            bool robotConnected;
-
-            DisplayScreenHeader("Connect Finch Robot");
-
-            Console.WriteLine("\tAbout to connect to Finch robot. Please be sure the USB cable is connected to the robot and computer now.");
-            DisplayContinuePrompt();
-
-            robotConnected = finchRobot.connect();
-
-            // TODO test connection and provide user feedback - text, lights, sounds
-
-            DisplayMenuPrompt("Main Menu");
-
-            //
-            // reset finch robot
-            //
-            finchRobot.setLED(0, 0, 0);
-            finchRobot.noteOff();
-
-            return robotConnected;
-        }
-
-        #endregion
-
-        #region USER INTERFACE
-
-        /// <summary>
-        /// *****************************************************************
-        /// *                     Welcome Screen                            *
-        /// *****************************************************************
-        /// </summary>
-        static void DisplayWelcomeScreen()
-        {
-            Console.CursorVisible = false;
-
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("\t\tFinch Control");
-            Console.WriteLine();
-
-            DisplayContinuePrompt();
-        }
-
-        /// <summary>
-        /// *****************************************************************
-        /// *                     Closing Screen                            *
-        /// *****************************************************************
-        /// </summary>
-        static void DisplayClosingScreen()
-        {
-            Console.CursorVisible = false;
-
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("\t\tThank you for using Finch Control!");
-            Console.WriteLine();
-
-            DisplayContinuePrompt();
-        }
-
-        /// <summary>
-        /// display continue prompt
-        /// </summary>
-        static void DisplayContinuePrompt()
-        {
-            Console.WriteLine();
-            Console.WriteLine("\tPress any key to continue.");
-            Console.ReadKey();
-        }
-
-        /// <summary>
-        /// display menu prompt
-        /// </summary>
-        static void DisplayMenuPrompt(string menuName)
-        {
-            Console.WriteLine();
-            Console.WriteLine($"\tPress any key to return to the {menuName} Menu.");
-            Console.ReadKey();
-        }
-
-        /// <summary>
-        /// display screen header
-        /// </summary>
-        static void DisplayScreenHeader(string headerText)
-        {
-            Console.Clear();
-            Console.WriteLine();
-            Console.WriteLine("\t\t" + headerText);
-            Console.WriteLine();
-        }
-
-        #endregion
     }
 }
+    
+
