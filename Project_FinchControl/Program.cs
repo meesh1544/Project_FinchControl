@@ -201,6 +201,40 @@ namespace Project_FinchControl
                 finchRobot.setLED(lightSoundLevel, lightSoundLevel, lightSoundLevel);
                 finchRobot.noteOn(lightSoundLevel * 75);
             }
+
+            finchRobot.setLED(0, 255, 0);
+            finchRobot.noteOn(784);
+            finchRobot.wait(500);
+            finchRobot.setLED(255, 0, 0);
+            finchRobot.noteOn(523);
+            finchRobot.wait(500);
+            finchRobot.setLED(100, 0, 50);
+            finchRobot.noteOn(684);
+            finchRobot.wait(500);
+            finchRobot.setLED(50, 100, 0);
+            finchRobot.noteOn(988);
+            finchRobot.wait(500);
+            finchRobot.setLED(255, 0, 100);
+            finchRobot.wait(500);
+            finchRobot.noteOn(65);
+            finchRobot.wait(500);
+            finchRobot.setLED(150, 0, 255);
+            finchRobot.wait(500);
+            finchRobot.noteOn(880);
+            finchRobot.wait(500);
+            finchRobot.setLED(255, 150, 0);
+            finchRobot.setLED(200, 0, 0);
+            finchRobot.wait(500);
+            finchRobot.setLED(100, 200, 0);
+            finchRobot.wait(500);
+            finchRobot.setLED(0, 100, 200);
+            finchRobot.wait(500);
+            finchRobot.noteOn(659);
+            finchRobot.setLED(255, 200, 0);
+            finchRobot.noteOn(0);
+            finchRobot.setLED(0, 0, 0);
+
+
             DisplayMenuPrompt("Talent Show Menu");
 
             //****************************************************************************
