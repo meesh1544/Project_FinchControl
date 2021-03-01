@@ -432,7 +432,7 @@ namespace Project_FinchControl
         {
             int numberOfDataPoints = 0;
             double dataPointFrequency = 0;
-            double[] temperatures = null;
+            double[] celsius = null;
             
             Console.CursorVisible = true;
 
@@ -468,11 +468,11 @@ namespace Project_FinchControl
                         break;
 
                     case "c":
-                        temperatures = DataRecorderDisplayGetData(numberOfDataPoints, dataPointFrequency, finchRobot);
+                        celsius = DataRecorderDisplayGetData(numberOfDataPoints, dataPointFrequency, finchRobot);
                         break;
 
                     case "d":
-                        DataRecorderDisplayData(temperatures);
+                        DataRecorderDisplayData(celsius);
                         break;
 
                     case "q":
@@ -489,37 +489,42 @@ namespace Project_FinchControl
             } while (!quitMenu);
         }
 
-        static void DataRecorderDisplayData(double[] temperatures)
+        static void DataRecorderDisplayData(double[] celsius)
         {
             DisplayScreenHeader("Show data");
 
-            DataRecorderDisplayTable(temperatures);
+            DataRecorderDisplayTable(celsius);
 
             DisplayContinuePrompt();
         }
 
-        static void DataRecorderDisplayTable(double[] temperatures)
+        static void DataRecorderDisplayTable(double[] celsius)
         {
             //
             //display table header
             //
             Console.WriteLine(
-                "Recording #".PadLeft(15) +
-                "Temp".PadLeft(15)
+             "-----------".PadLeft(15) +
+             "-----------".PadLeft(14)
+             );
+
+            Console.WriteLine(
+                "Recording #".PadLeft(14) +
+                "Temp in F*".PadLeft(15)
                 );
             Console.WriteLine(
                 "-----------".PadLeft(15) +
-                "-----------".PadLeft(15)
+                "-----------".PadLeft(14)
                 );
-
+            
             //
             //display data table
             //
-            for (int index = 0; index < temperatures.Length; index++)
+            for (int index = 0; index < celsius.Length; index++)
             {
                 Console.WriteLine(
-                   (index + 1).ToString().PadLeft(15) +
-                   temperatures[index].ToString("n2").PadLeft(15)
+                   (index + 1).ToString().PadLeft(14) +
+                   (celsius[index] * 9 / 5 + 32).ToString("n2").PadLeft(14)
                      );
             }
         }
@@ -529,8 +534,8 @@ namespace Project_FinchControl
 
         static double[] DataRecorderDisplayGetData(int numberOfDataPoints, double dataPointFrequency, Finch finchRobot)
         {
-            double[] temperatures = new double[numberOfDataPoints];
-            
+            //double[] temperatures = new double[numberOfDataPoints];
+            double[] celsius = new double[numberOfDataPoints];
             DisplayScreenHeader("Get Data");
 
             Console.WriteLine($"\tNumber of Data Points: {numberOfDataPoints}");
@@ -541,8 +546,15 @@ namespace Project_FinchControl
 
             for (int index = 0; index < numberOfDataPoints; index++)
             {
-                temperatures[index] = finchRobot.getTemperature();
-                Console.WriteLine($"\tReading {index + 1}: {temperatures[index].ToString("n2")}");
+                //temperatures[index] = finchRobot.getTemperature();
+                //Console.WriteLine();
+                //Console.WriteLine($"\tReading {index + 1}: {temperatures[index].ToString("n2")}");
+                //int waitInSeconds = (int)(dataPointFrequency * 1000);
+                //finchRobot.wait(1000);
+
+                celsius[index] = finchRobot.getTemperature();
+                double farenheight = (celsius[index] * 9 / 5 + 32);
+                Console.WriteLine($"\t{index + 1}C*: {celsius[index]} F*: {farenheight} ");
                 int waitInSeconds = (int)(dataPointFrequency * 1000);
                 finchRobot.wait(1000);
             }
@@ -553,9 +565,9 @@ namespace Project_FinchControl
             Console.WriteLine();
             Console.WriteLine("\tTable of temperatures");
             Console.WriteLine();
-            DataRecorderDisplayTable(temperatures);
+            DataRecorderDisplayTable(celsius);
 
-            return temperatures;
+            return celsius;
         }
 
         /// <summary>
