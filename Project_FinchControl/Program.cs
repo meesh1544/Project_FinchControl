@@ -20,7 +20,10 @@ namespace Project_FinchControl
         TURNLEFT,
         LEDON,
         LEDOFF,
+        NOTEON,
         GETTEMPERATURE,
+        DANCE,
+        LIGHTSHOW,
         DONE
     }
 
@@ -1026,7 +1029,7 @@ namespace Project_FinchControl
             int waitMilliSeconds = (int)(commandParamaters.waitSeconds * 1000);
             string commandFeedback = "";
             const int Turning_Motor_Speed = 100;
-
+            
             DisplayScreenHeader("Execute Finch Commands");
 
             Console.WriteLine("\tThe Finch robot is ready to execute the list of demands");
@@ -1052,6 +1055,36 @@ namespace Project_FinchControl
                     case Command.STOPMOTORS:
                         finchRobot.setMotors(0, 0);
                         commandFeedback = Command.STOPMOTORS.ToString();
+                        break;
+
+                    case Command.DANCE:
+                        finchRobot.setMotors(Turning_Motor_Speed, -Turning_Motor_Speed);
+                        finchRobot.setLED(ledBrightness, ledBrightness, ledBrightness);
+                        finchRobot.wait(waitMilliSeconds);
+                        finchRobot.setMotors(0, 0);
+                        finchRobot.setLED(0,0,0);
+                        commandFeedback = Command.TURNLEFT.ToString();
+                        commandFeedback = Command.TURNRIGHT.ToString();
+                        commandFeedback = Command.WAIT.ToString();
+                        commandFeedback = Command.LEDON.ToString();
+                        commandFeedback = Command.DANCE.ToString();
+                        break;
+
+                    case Command.NOTEON:
+                        finchRobot.noteOn(698);
+                        commandFeedback = Command.NOTEON.ToString();
+                        break;
+
+                    case Command.LIGHTSHOW:
+                        finchRobot.noteOn(698);
+                        finchRobot.setLED(ledBrightness, ledBrightness, ledBrightness);
+                        finchRobot.wait(waitMilliSeconds);
+                        finchRobot.noteOn(0);
+                        finchRobot.setLED(0, 0, 0);
+                        commandFeedback = Command.NOTEON.ToString();
+                        commandFeedback = Command.LEDON.ToString();
+                        commandFeedback = Command.WAIT.ToString();
+                        commandFeedback = Command.LIGHTSHOW.ToString();
                         break;
 
                     case Command.WAIT:
